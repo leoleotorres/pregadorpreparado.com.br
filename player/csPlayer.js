@@ -73,9 +73,7 @@ YtSetup:(videoTag,playerTagId,defaultId)=>{
 var parent = document.querySelector("#"+playerTagId).closest(".csPlayer");
 var controlsTimeout = null;
 return new Promise((resolve, reject) => {
-  csPlayer.csPlayers[videoTag]["videoTag"] = new YT.Player(playerTagId,{
-    videoId: csPlayer.csPlayers[videoTag]["params"]["defaultId"],
-    playerVars:{
+  var playerVars = {
      controls: 0,
      mute: 1,
      autoplay: 1,
@@ -88,7 +86,13 @@ return new Promise((resolve, reject) => {
      cc_load_policy: 3,
      showinfo: 0,
      iv_load_policy: 3,     
-    },
+  };
+  if ("start" in csPlayer.csPlayers[videoTag]["params"]) {
+    playerVars.start = csPlayer.csPlayers[videoTag]["params"]["start"];
+  }
+  csPlayer.csPlayers[videoTag]["videoTag"] = new YT.Player(playerTagId,{
+    videoId: csPlayer.csPlayers[videoTag]["params"]["defaultId"],
+    playerVars: playerVars,
     events:{
      'onReady':()=>{
 if($("#"+videoTag) != null && videoTag){
@@ -346,6 +350,9 @@ return new Promise((resolve, reject) => {
     }if("theme" in params){
     csPlayer.csPlayers[videoTag]["params"]["theme"] = params["theme"];
     }
+    if("start" in params){
+    csPlayer.csPlayers[videoTag]["params"]["start"] = params["start"];
+    }
     csPlayer.csPlayers[videoTag]["isPlaying"] = false;
     csPlayer.csPlayers[videoTag]["playerState"] ="paused";
     csPlayer.csPlayers[videoTag]["initialized"] = false; csPlayer.preSetup(videoTag,playerTagId="csPlayer-"+videoTag,params["defaultId"]).then(()=>{
@@ -436,10 +443,10 @@ getPlayerState:(videoTag)=>{
     throw new Error("getPlayerState function must have player id as a parameter.")
     }
     },
-changeVideo:(videoTag,videoId)=>{
+changeVideo:(videoTag,videoId, start=0)=>{
     if(videoTag && videoId){
     if((videoTag in csPlayer.csPlayers) && csPlayer.csPlayers[videoTag]["initialized"] == true){
-     csPlayer.csPlayers[videoTag]["videoTag"].loadVideoById(videoId,0);
+     csPlayer.csPlayers[videoTag]["videoTag"].loadVideoById(videoId, start);
     }else{
     throw new Error("Player "+videoTag+" is not initialized yet.")
     }}else{

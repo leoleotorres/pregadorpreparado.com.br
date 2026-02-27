@@ -381,85 +381,37 @@ width: 50%;
 <script>
 //custom script 
 function $(selector,parent){
-var x;
-try{
-const elements = document.querySelectorAll(selector);
-if(elements.length == 1){x = elements[0]}
-else if(elements.length == 0){x = null}
-else{x = elements}
-}catch(error){
-x = error;
-}return x;
+    var x;
+    try{
+        const elements = document.querySelectorAll(selector);
+        if(elements.length == 1){
+            x = elements[0]
+        }
+        else if(elements.length == 0){
+            x = null
+        }
+        else{
+            x = elements
+        }
+    }catch(error){
+        x = error;
+    }
+    return x;
 }
+
+
+
+/*
 csPlayer.init("videoPlayer",{
 defaultId: "W3sngewxOj0",
 thumbnail: true,
 theme: "default",
 loop: false,
 });
+*/
 
 
-$("form").onsubmit = function(e){
-e.preventDefault();
-const isValidUrl = (string)=>{
-if(string !=""){
-return!!string.match(/^(https?:\/\/)?((([a-zA-Z0-9_-]+)\.)+[a-zA-Z]{2,})(\:[0-9]{1,5})?(\/.*)?$/i);
-}}
-var id = $("form div:nth-of-type(1) span:nth-of-type(1) input").value !="" ? $("form div:nth-of-type(1) span:nth-of-type(1) input").value : "RKERYQwvlFw";
-var thumbnail = $("form div:nth-of-type(1) span:nth-of-type(2) input").value !="" ? $("form div:nth-of-type(1) span:nth-of-type(2) input").value : "true";
-var rethumbnail = isValidUrl(thumbnail) ? `"${thumbnail}"` : thumbnail;
-var theme = $("form div:nth-of-type(1) span:nth-of-type(3) select").value;
-var loop = $("form div:nth-of-type(1) span:nth-of-type(4) select").value;
-var code =`&lthtml&gt
-&lthead&gt
-  &ltlink rel="stylesheet" href="../src/csPlayer.css"&gt
-  &ltscript src="https://www.youtube.com/iframe_api"&gt&lt/script&gt
-&lt/head&gt
-&ltbody&gt
-&ltdiv id="videoPlayer"&gt&lt/div&gt
 
-&ltscript src="../src/csPlayer.js"&gt&lt/script&gt
-&ltscript&gt
-csPlayer.init("videoPlayer",{
-defaultId: "${id}",
-thumbnail: ${rethumbnail},
-theme: "${theme}",
-loop: ${loop},
-});
-// Example methods:
-// csPlayer.play("videoPlayer")
-// csPlayer.pause("videoPlayer")
-// csPlayer.getCurrentTime("videoPlayer")
-// csPlayer.getDuration("videoPlayer")
-// csPlayer.getVideoTitle("videoPlayer")
-// csPlayer.getPlayerState("videoPlayer")
-// csPlayer.changeVideo("videoPlayer","bTqVqk7FSmY")
-// csPlayer.destroy("videoPlayer")
-&lt/script&gt
-&lt/body&gt
-&lthtml&gt
-`;
-if(thumbnail =="true" || thumbnail =="false" || isValidUrl(thumbnail)){
-$("form button i").style.display ="block";
-$('form button[type="submit"]').setAttribute("disable","true")
-if($("#videoPlayer .csPlayer") != null){
-csPlayer.destroy("videoPlayer");    
-}
-csPlayer.init("videoPlayer",{
-defaultId: id,
-thumbnail: thumbnail,
-theme: theme,
-loop: loop,
-}).then(()=>{
-$(".container .code-box pre").innerHTML =`<code>${code}</code>`;
-hljs.highlightAll();
-setTimeout(()=>{
-$("form button i").style.display ="none";
-$('form button[type="submit"]').removeAttribute("disable");
-},1000);});
-}else{
-alert("Thumbnail's value must be a valid URL or true or false")
-}}
 
 //to show
 var showInterval;
@@ -508,6 +460,9 @@ async function loadVideosFromJSON() {
     try {
         const response = await fetch('videos.json');
         const data = await response.json();
+
+        // Inicializar o player com o vídeo em destaque
+        initializePlayerWithFeatured(data.featured);
         
         // Renderizar categorias e vídeos
         renderVideosCategories(data.categories);
@@ -555,7 +510,11 @@ function renderVideosCategories(categories) {
 function createVideoItem(video) {
     const videoDiv = document.createElement('div');
     videoDiv.className = 'video-item';
-    videoDiv.onclick = () => playVideoDemo(video.id, video.title);
+    //videoDiv.onclick = () => playVideoDemo(video.id, video.title);
+
+    
+    videoDiv.onclick = () => playVideoDemo(video.id, video.title, video.start);
+
     
     const thumbnail = document.createElement('img');
     thumbnail.src = `https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`;
@@ -568,6 +527,11 @@ function createVideoItem(video) {
     const playIcon = document.createElement('div');
     playIcon.className = 'play-icon';
     playIcon.innerHTML = '▶';
+
+    // adiciona atributo start ao elemento
+    if(video.start){
+        videoDiv.dataset.start = video.start;
+    }
     
     const info = document.createElement('div');
     info.className = 'video-info';
@@ -589,11 +553,28 @@ function createVideoItem(video) {
 }
 
 // Função para reproduzir vídeo no demo
-function playVideoDemo(videoId, title) {
-    csPlayer.changeVideo("videoPlayer", videoId);
+function playVideoDemo(videoId, title, start) {
+    csPlayer.changeVideo("videoPlayer", videoId, start ? parseInt(start) : 1);
     
     // Scroll para o player
     document.getElementById('videoPlayer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Inicializar o player com o vídeo em destaque
+function initializePlayerWithFeatured(featured) {
+    if (!featured || !featured.id) return;
+    
+    csPlayer.init("videoPlayer", {
+        defaultId: featured.id,
+        thumbnail: true,
+        theme: "default",
+        loop: false,
+        start: featured.start ? parseInt(featured.start) : 0,
+    });
+//csPlayer.play("videoPlayer");
+    //playVideoDemo(featured.id, featured.title);
+    //csPlayer.changeVideo("videoPlayer", featured.id);
+    //csPlayer.playVideo("videoPlayer", featured.id);
 }
 
 // Carregar vídeos quando a página estiver pronta
