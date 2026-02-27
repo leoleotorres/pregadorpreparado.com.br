@@ -11,7 +11,7 @@ async function loadVideos() {
         initializePlayerWithFeatured(videosData.featured);
         
         // Renderizar vídeo em destaque
-        renderFeatured(videosData.featured);
+        //renderFeatured(videosData.featured);
         
         // Renderizar categorias e vídeos
         renderCategories(videosData.categories);
@@ -30,6 +30,8 @@ function initializePlayerWithFeatured(featured) {
         theme: "default",
         loop: false,
     });
+
+    csPlayer.playVideo("video1", featured.id);
 }
 
 // Renderizar vídeo em destaque
@@ -111,8 +113,7 @@ function createVideoElement(video) {
 
 // Função para reproduzir vídeo
 function playVideo(videoId, title) {
-    csPlayer.setVideoId("video1", videoId);
-    csPlayer.play("video1");
+    csPlayer.changeVideo("video1", videoId);
     
     // Scroll para o player
     document.getElementById('video1').scrollIntoView({ behavior: 'smooth', block: 'start' });
