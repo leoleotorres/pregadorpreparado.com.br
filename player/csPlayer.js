@@ -439,11 +439,7 @@ getPlayerState:(videoTag)=>{
 changeVideo:(videoTag,videoId)=>{
     if(videoTag && videoId){
     if((videoTag in csPlayer.csPlayers) && csPlayer.csPlayers[videoTag]["initialized"] == true){
-     if(!csPlayer.csPlayers[videoTag]["videoTag"].isMuted()){
      csPlayer.csPlayers[videoTag]["videoTag"].loadVideoById(videoId,0);
-     }else{
-     throw new Error("Before calling the changeVideo function, the previous video must be played in the player.");
-     }
     }else{
     throw new Error("Player "+videoTag+" is not initialized yet.")
     }}else{
