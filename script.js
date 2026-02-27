@@ -1,15 +1,18 @@
 let videos = []; // will be populated from JSON
 let featured = null; // featured video from JSON
+let categories = []; // categories with videos
 
 // fetch video list from external JSON
 fetch('videos.json')
     .then(res => res.json())
     .then(data => {
         featured = data.featured;
-        videos = data.videos;
+        categories = data.categories;
         loadFeaturedVideo(featured);
         gallery.innerHTML = '';
-        videos.forEach(v => gallery.appendChild(createThumbnail(v)));
+        categories.forEach(category => {
+            gallery.appendChild(createCategorySection(category));
+        });
     })
     .catch(err => console.error('Failed to load video list:', err));
 
@@ -29,6 +32,25 @@ function loadFeaturedVideo(video) {
     featuredDescription.textContent = video.description;
 }
 
+function createCategorySection(category) {
+    const section = document.createElement('section');
+    section.className = 'category-section';
+    
+    const titleEl = document.createElement('h2');
+    titleEl.className = 'category-title';
+    titleEl.textContent = category.title;
+    section.appendChild(titleEl);
+    
+    const galleryEl = document.createElement('div');
+    galleryEl.className = 'category-gallery';
+    category.videos.forEach(video => {
+        galleryEl.appendChild(createThumbnail(video));
+    });
+    section.appendChild(galleryEl);
+    
+    return section;
+}
+
 function createThumbnail(video) {
     const div = document.createElement('div');
     div.className = 'thumbnail';
@@ -42,7 +64,10 @@ function createThumbnail(video) {
         desc.textContent = video.description;
         div.appendChild(desc);
     }
-    div.addEventListener('click', () => openPlayer(video.id));
+    div.addEventListener('click', () => {
+        loadFeaturedVideo(video);
+        document.getElementById('featuredSection').scrollIntoView({ behavior: 'smooth' });
+    });
     return div;
 }
 
@@ -57,9 +82,6 @@ function closePlayer() {
     // delay clearing src to stop playback
     setTimeout(() => (player.src = ''), 300);
 }
-
-gallery.innerHTML = '';
-videos.forEach(v => gallery.appendChild(createThumbnail(v)));
 
 overlay.addEventListener('click', e => {
     if (e.target === overlay || e.target === closeBtn) {

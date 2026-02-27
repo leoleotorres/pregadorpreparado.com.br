@@ -59,10 +59,20 @@ header h1 {
     color: #ccc;
 }
 #gallery {
+    padding: 0;
+}
+.category-section {
+    padding: 0 20px 40px 20px;
+}
+.category-title {
+    font-size: 1.5rem;
+    margin: 30px 0 20px 0;
+    padding-left: 20px;
+}
+.category-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 15px;
-    padding: 20px;
 }
 .thumbnail {
     position: relative;
