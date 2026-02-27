@@ -1,0 +1,13 @@
+{
+  "name": "pregadorpreparado-streaming",
+  "version": "1.0.0",
+  "description": "Página de streaming estilo Netflix usando embeds do YouTube",
+  "scripts": {
+    "start": "live-server --open=./index.html --port=8080",
+    "serve": "npx http-server -c-1"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.1",
+    "http-server": "^14.1.1"
+  }
+}
