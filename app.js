@@ -111,12 +111,7 @@ function createVideoElement(video) {
 
 // Função para reproduzir vídeo
 function playVideo(videoId, title) {
-    csPlayer.init("video1", {
-        defaultId: videoId,
-        thumbnail: true,
-        theme: "default",
-        loop: false,
-    });
+    csPlayer.setVideoId("video1", videoId);
     csPlayer.play("video1");
     
     // Scroll para o player
