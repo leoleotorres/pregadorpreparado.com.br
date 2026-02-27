@@ -1,10 +1,13 @@
 let videos = []; // will be populated from JSON
+let featured = null; // featured video from JSON
 
 // fetch video list from external JSON
 fetch('videos.json')
     .then(res => res.json())
     .then(data => {
-        videos = data;
+        featured = data.featured;
+        videos = data.videos;
+        loadFeaturedVideo(featured);
         gallery.innerHTML = '';
         videos.forEach(v => gallery.appendChild(createThumbnail(v)));
     })
@@ -14,6 +17,17 @@ const gallery = document.getElementById('gallery');
 const overlay = document.getElementById('overlay');
 const player = document.getElementById('player');
 const closeBtn = document.getElementById('closeBtn');
+const featuredPlayer = document.getElementById('featuredPlayer');
+const featuredTitle = document.getElementById('featuredTitle');
+const featuredDescription = document.getElementById('featuredDescription');
+
+function loadFeaturedVideo(video) {
+    if (!video) return;
+    const url = `https://www.youtube.com/embed/${video.id}?rel=0&modestbranding=1&showinfo=0&controls=1&iv_load_policy=3&fs=0&autoplay=0`;
+    featuredPlayer.src = url;
+    featuredTitle.textContent = video.title;
+    featuredDescription.textContent = video.description;
+}
 
 function createThumbnail(video) {
     const div = document.createElement('div');

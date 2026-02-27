@@ -1,4 +1,10 @@
-[
+{
+    "featured": {
+        "id": "dQw4w9WgXcQ",
+        "title": "Relaxing Music",
+        "description": "A calm background track perfect for studying or relaxing."
+    },
+    "videos": [
     { "id": "dQw4w9WgXcQ", "title": "Relaxing Music", "description": "A calm background track perfect for studying or relaxing." },
     { "id": "3JZ_D3ELwOQ", "title": "Inspirational Talk", "description": "Motivational speech to boost your day." },
     { "id": "9bZkp7q19f0", "title": "K-Pop Dance", "description": "Energetic dance performance from a popular K-Pop group." },
@@ -19,4 +25,5 @@
     { "id": "SlPhMPnQ58k", "title": "Dance Song", "description": "Upbeat dance track to get you moving." },
     { "id": "6Dh-RL__uN4", "title": "EDM Track", "description": "Electronic dance music with pulsating beats." },
     { "id": "YYXdXT2l-Gg", "title": "Alternative", "description": "Indie/alternative tune with unique sound." }
-]
+    ]
+}
