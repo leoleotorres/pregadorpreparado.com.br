@@ -1,17 +1,35 @@
+// Variável global para armazenar dados dos vídeos
+let videosData = null;
+
 // Carregar e exibir vídeos do arquivo JSON
 async function loadVideos() {
     try {
         const response = await fetch('videos.json');
-        const data = await response.json();
+        videosData = await response.json();
+        
+        // Inicializar o player com o vídeo em destaque
+        initializePlayerWithFeatured(videosData.featured);
         
         // Renderizar vídeo em destaque
-        renderFeatured(data.featured);
+        renderFeatured(videosData.featured);
         
         // Renderizar categorias e vídeos
-        renderCategories(data.categories);
+        renderCategories(videosData.categories);
     } catch (error) {
         console.error('Erro ao carregar vídeos:', error);
     }
+}
+
+// Inicializar o player com o vídeo em destaque
+function initializePlayerWithFeatured(featured) {
+    if (!featured || !featured.id) return;
+    
+    csPlayer.init("video1", {
+        defaultId: featured.id,
+        thumbnail: true,
+        theme: "default",
+        loop: false,
+    });
 }
 
 // Renderizar vídeo em destaque
@@ -19,8 +37,12 @@ function renderFeatured(featured) {
     const container = document.getElementById('featured-container');
     if (!featured) return;
     
-    const videoElement = createVideoElement(featured);
-    container.appendChild(videoElement);
+    // O elemento de vídeo já existe no HTML, apenas atualizamos a informação
+    const videoDiv = document.getElementById('video1');
+    if (videoDiv) {
+        videoDiv.dataset.videoId = featured.id;
+        videoDiv.dataset.videoTitle = featured.title;
+    }
 }
 
 // Renderizar categorias e seus vídeos
@@ -89,12 +111,16 @@ function createVideoElement(video) {
 
 // Função para reproduzir vídeo
 function playVideo(videoId, title) {
-    csPlayer.setVideoId("video1", videoId);
+    csPlayer.init("video1", {
+        defaultId: videoId,
+        thumbnail: true,
+        theme: "default",
+        loop: false,
+    });
     csPlayer.play("video1");
-    document.querySelector('.video-box h1').textContent = title;
     
     // Scroll para o player
-    document.querySelector('.video-box').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('video1').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // Carregar vídeos quando a página estiver pronta

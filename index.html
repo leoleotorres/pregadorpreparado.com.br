@@ -20,15 +20,15 @@
 
 
 <div class="container">
-<div class="video-box">
- <div id="video1" class="video"></div>
- <h1></h1>
-</div>
+
 
 <div class="videos-section">
   <div id="featured-section" class="featured-section">
     <h2>Em Destaque</h2>
-    <div id="featured-container" class="featured-container"></div>
+    
+    <div id="featured-container" >
+<div id="video1" class="video"></div>
+    </div>
   </div>
 
   <div id="categories-section" class="categories-section"></div>
@@ -51,12 +51,8 @@ else{x = elements}
 x = error;
 }return x;
 }
-csPlayer.init("video1",{
-defaultId: "RKERYQwvlFw",
-thumbnail: true,
-theme: "default",
-loop: false,
-});
+
+
 
 
 
