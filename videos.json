@@ -9,8 +9,8 @@
             "id": "categoria-um",
             "title": "Categoria Um",
             "videos": [
-                { "id": "dQw4w9WgXcQ", "title": "Relaxing Music", "description": "A calm background track perfect for studying or relaxing." },
-                { "id": "3JZ_D3ELwOQ", "title": "Inspirational Talk", "description": "Motivational speech to boost your day." },
+                { "id": "W3sngewxOj0", "title": "Relaxing Music", "description": "A calm background track perfect for studying or relaxing." },
+                { "id": "xOS0dZ7ylq0", "title": "Inspirational Talk", "description": "Motivational speech to boost your day." },
                 { "id": "9bZkp7q19f0", "title": "K-Pop Dance", "description": "Energetic dance performance from a popular K-Pop group." },
                 { "id": "L_jWHffIx5E", "title": "Comedy Clip", "description": "A hilarious sketch that will make you laugh out loud." },
                 { "id": "eVTXPUF4Oz4", "title": "Rock Music", "description": "A classic rock song with epic guitar solos." }
@@ -25,28 +25,6 @@
                 { "id": "hT_nvWreIhg", "title": "Pop Song", "description": "Mainstream pop music video with colorful visuals." },
                 { "id": "fJ9rUzIMcZQ", "title": "Classic", "description": "Timeless music video featuring legendary artists." },
                 { "id": "RgKAFK5djSk", "title": "Rap Performance", "description": "High-energy rap track with smooth beats." }
-            ]
-        },
-        {
-            "id": "categoria-tres",
-            "title": "Categoria Três",
-            "videos": [
-                { "id": "e-ORhEE9VVg", "title": "Music Video", "description": "Visual masterpiece to accompany a hit single." },
-                { "id": "09R8_2nJtjg", "title": "Dance Performance", "description": "Professional dancers showing off amazing moves." },
-                { "id": "uelHwf8o7_U", "title": "Hip Hop", "description": "Hip hop track with powerful lyrics." },
-                { "id": "2Vv-BfVoq4g", "title": "Ballad", "description": "Emotional ballad that's sure to tug at your heart." },
-                { "id": "hLQl3WQQoQ0", "title": "Power Ballad", "description": "Powerful vocal performance with stirring harmonies." }
-            ]
-        },
-        {
-            "id": "categoria-quatro",
-            "title": "Categoria Quatro",
-            "videos": [
-                { "id": "JGwWNGJdvx8", "title": "Pop Anthem", "description": "Feel-good anthem with an upbeat chorus." },
-                { "id": "ktvTqknDobU", "title": "Emotional", "description": "A touching song that conveys deep emotions." },
-                { "id": "SlPhMPnQ58k", "title": "Dance Song", "description": "Upbeat dance track to get you moving." },
-                { "id": "6Dh-RL__uN4", "title": "EDM Track", "description": "Electronic dance music with pulsating beats." },
-                { "id": "YYXdXT2l-Gg", "title": "Alternative", "description": "Indie/alternative tune with unique sound." }
             ]
         }
     ]
