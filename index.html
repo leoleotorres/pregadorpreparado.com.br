@@ -108,7 +108,7 @@ function createVideoItem(video) {
     //videoDiv.onclick = () => playVideoDemo(video.id, video.title);
 
     
-    videoDiv.onclick = () => playVideoDemo(video.id, video.title, video.start);
+    videoDiv.onclick = () => playVideoDemo(video.id, video.title, video.start, video.end);
 
     
     const thumbnail = document.createElement('img');
@@ -148,8 +148,8 @@ function createVideoItem(video) {
 }
 
 // Função para reproduzir vídeo no demo
-function playVideoDemo(videoId, title, start) {
-    csPlayer.changeVideo("videoPlayer", videoId, start ? parseInt(start) : 1);
+function playVideoDemo(videoId, title, start, end) {
+    csPlayer.changeVideo("videoPlayer", videoId, start ? parseInt(start) : 1, end ? parseInt(end) : null);
     
     // Scroll para o player
     document.getElementById('videoPlayer').scrollIntoView({ behavior: 'smooth', block: 'start' });

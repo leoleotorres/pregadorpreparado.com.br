@@ -98,6 +98,12 @@ var csPlayer = {
       if ("start" in csPlayer.csPlayers[videoTag]["params"]) {
         playerVars.start = csPlayer.csPlayers[videoTag]["params"]["start"];
       }
+
+      if ("end" in csPlayer.csPlayers[videoTag]["params"]) {
+        playerVars.end = csPlayer.csPlayers[videoTag]["params"]["end"];
+      }
+
+
       csPlayer.csPlayers[videoTag]["videoTag"] = new YT.Player(playerTagId, {
         videoId: csPlayer.csPlayers[videoTag]["params"]["defaultId"],
         playerVars: playerVars,
@@ -230,7 +236,13 @@ var csPlayer = {
     function updateTextTime() {
       var currentTime =
         csPlayer.csPlayers[videoTag]["videoTag"].getCurrentTime();
-      var duration = csPlayer.csPlayers[videoTag]["videoTag"].getDuration();
+
+      var duration = 0;
+      if (csPlayer.csPlayers[videoTag]["params"]["end"] != null)      
+          duration = csPlayer.csPlayers[videoTag]["params"]["end"];
+      else
+          duration = csPlayer.csPlayers[videoTag]["videoTag"].getDuration();  
+
       parent.querySelector(
         ".csPlayer-controls-box .csPlayer-controls p:nth-of-type(1)",
       ).innerHTML = formatTime(String(currentTime));
@@ -245,7 +257,13 @@ var csPlayer = {
       );
       var currentTime =
         csPlayer.csPlayers[videoTag]["videoTag"].getCurrentTime();
-      var duration = csPlayer.csPlayers[videoTag]["videoTag"].getDuration();
+
+      var duration = 0;
+      if (csPlayer.csPlayers[videoTag]["params"]["end"] != null)      
+          duration = csPlayer.csPlayers[videoTag]["params"]["end"];
+      else
+          duration = csPlayer.csPlayers[videoTag]["videoTag"].getDuration();
+
       var progress = (currentTime / duration) * 100;
       var loaded =
         csPlayer.csPlayers[videoTag]["videoTag"].getVideoLoadedFraction() * 100;
@@ -254,13 +272,32 @@ var csPlayer = {
       parent.querySelector(
         ".csPlayer-controls-box .csPlayer-controls div span",
       ).style.width = loaded + "%";
+
+      console.info('progress: ',progress);
+      console.info('YT.PlayerState.ENDED: ',YT.PlayerState.ENDED);
+      
+      if (progress >= 100)
+      {
+        onPlayerStateChange({
+          data: YT.PlayerState.ENDED,
+          target: csPlayer.csPlayers[videoTag]["videoTag"]
+        });        
+        //csPlayer.csPlayers[videoTag]["videoTag"].seekTo(0.1);
+        //csPlayer.csPlayers[videoTag]["videoTag"].pauseVideo();
+      }
     }
     function updateSlider() {
       clearTimeout(controlsTimeout);
       var slider = parent.querySelector(
         ".csPlayer-controls-box .csPlayer-controls div input",
       );
-      var duration = csPlayer.csPlayers[videoTag]["videoTag"].getDuration();
+      
+      var duration = 0;
+      if (csPlayer.csPlayers[videoTag]["params"]["end"] != null)      
+          duration = csPlayer.csPlayers[videoTag]["params"]["end"];
+      else
+          duration = csPlayer.csPlayers[videoTag]["videoTag"].getDuration();
+
       var progress = slider.value;
       slider.style.background = `linear-gradient(to right, var(--sliderSeekTrackColor) ${progress}%, transparent ${progress}%)`;
       csPlayer.csPlayers[videoTag]["videoTag"].seekTo(
@@ -524,6 +561,10 @@ var csPlayer = {
             if ("start" in params) {
               csPlayer.csPlayers[videoTag]["params"]["start"] = params["start"];
             }
+            if ("end" in params) {
+              csPlayer.csPlayers[videoTag]["params"]["end"] = params["end"];
+            }            
+
             csPlayer.csPlayers[videoTag]["isPlaying"] = false;
             csPlayer.csPlayers[videoTag]["playerState"] = "paused";
             csPlayer.csPlayers[videoTag]["initialized"] = false;
@@ -636,7 +677,8 @@ var csPlayer = {
       if (
         videoTag in csPlayer.csPlayers &&
         csPlayer.csPlayers[videoTag]["initialized"] == true
-      ) {
+      ) {     
+        console.log("entrou");
         return csPlayer.csPlayers[videoTag]["videoTag"].getDuration();
       } else {
         throw new Error("Player " + videoTag + " is not initialized yet.");
@@ -695,13 +737,14 @@ var csPlayer = {
       );
     }
   },
-  changeVideo: (videoTag, videoId, start = 0) => {
+  changeVideo: (videoTag, videoId, start = 0, end = null) => {
     if (videoTag && videoId) {
       if (
         videoTag in csPlayer.csPlayers &&
         csPlayer.csPlayers[videoTag]["initialized"] == true
       ) {
         csPlayer.csPlayers[videoTag]["videoTag"].loadVideoById(videoId, start);
+        csPlayer.csPlayers[videoTag]["params"]["end"] = end;
       } else {
         throw new Error("Player " + videoTag + " is not initialized yet.");
       }
