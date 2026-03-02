@@ -2,7 +2,9 @@
     "featured": {
         "id": "W3sngewxOj0",
         "title": "Relaxing Music",
-        "description": "A calm background track perfect for studying or relaxing."
+        "description": "A calm background track perfect for studying or relaxing.",
+        "start": "30",
+        "autoPlay": true
     },
     "categories": [
         {
