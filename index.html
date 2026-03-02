@@ -9,11 +9,11 @@
     <script>hljs.highlightAll();</script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="player/csPlayer.css">
-    <title>csPlayer Demo</title>
+    <title>Pregador Preparado</title>
 </head>
 <body>
 <nav>
- <span><img src="csPlayer.png"><h1>csPlayer</h1></span>
+ <span><img src="csPlayer.png"><h1>Pregador Preparado</h1></span>
  <a href="https://github.com/abtp2/csPlayer"><img src="github.png" alt="&nbsp;"></a>
 </nav>
 
@@ -49,62 +49,6 @@ function $(selector,parent){
         x = error;
     }
     return x;
-}
-
-
-
-/*
-csPlayer.init("videoPlayer",{
-defaultId: "W3sngewxOj0",
-thumbnail: true,
-theme: "default",
-loop: false,
-});
-*/
-
-
-
-
-//to show
-var showInterval;
-function show(text){
-$(".video-box h1").innerHTML = text;
-showInterval = setTimeout(()=>{
-$(".video-box h1").innerHTML ="";
-},2500);  
-}
-
-//button functions
-function play(){
-csPlayer.play("videoPlayer");   
-}
-function pause(){
-csPlayer.pause("videoPlayer");    
-}
-function getCurrentTime(){
-x = csPlayer.getCurrentTime("videoPlayer");
-clearTimeout(showInterval);
-show("Current time: " + x + "s");
-}
-function getDuration(){
-x = csPlayer.getDuration("videoPlayer");
-clearTimeout(showInterval);
-show("Duration : " + x + "s");
-}
-function getVideoTitle(){
-x = csPlayer.getVideoTitle("videoPlayer");
-clearTimeout(showInterval);
-show("Title: " + x);
-}
-function getPlayerState(){
-x = csPlayer.getPlayerState("videoPlayer");
-clearTimeout(showInterval);
-show("State: " + x);
-}
-function destroy(){
-x = csPlayer.destroy("videoPlayer");
-clearTimeout(showInterval);
-show("Destroyed!");
 }
 
 // Carregar e renderizar vídeos do arquivo JSON

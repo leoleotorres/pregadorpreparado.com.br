@@ -21,6 +21,7 @@ background-color: #181818;
 nav{
 width: 90%;
 margin: 0 auto;
+padding: 20px;
 display: flex;
 align-items: center;
 justify-content: space-between;
@@ -49,106 +50,14 @@ nav a img{
 width: 45px;
 border-radius: 100%;
 }
-form{
-width: 90%;
-margin: 2rem auto 0 auto;
-background: rgba(255,255,255,0.1);
-padding: 10px 12px;
-border-radius: 5px;
-}
-form div:nth-of-type(1){
-width: 100%;
-display: flex;
-align-items: center;
-flex-wrap: wrap;
-}
-form div span{
-display: flex;
-flex-direction: column;
-margin: 5px 10px 8px 0;
-}
-form div span p{
-color: #e1e1e1;
-font-size: 13px;
-opacity: 0.8;
-margin-bottom: 5px;
-}
-form div span input{
-width: 130px;
-padding: 10px 12px;
-color: #d2d2d2;
-background: rgba(0,0,0,0.35);
-border: none;
-border-radius: 3px;
-outline: none;
-}
-form div span select{
-width: 130px;
-padding: 10px 5px;
-color: #a3a3a3;
-background: rgba(0,0,0,0.35);
-border: none;
-border-radius: 3px;
-outline: none;
-}
-form div span select option{
-background: #000;
-color: #a3a3a3;
-}
-
-form div:nth-of-type(2){
-width: 100%;
-display: flex;
-align-items: center;
-flex-wrap: wrap;
-margin-top: 10px;
-}
-form div button{
-padding: 8px 12px;
-background: rgba(255,255,255,0.1);
-color: #e1e1e1;
-border: none;
-border-radius: 3px;
-box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.22);
-font-size: 13px; 
-display: flex;
-align-items: center;
-margin: 5px 10px 5px 0;
-}
-form button[type="submit"]{
-margin-top: 2rem;
-padding: 12px 15px;
-background: rgba(0,0,0,0.5);
-color: #e1e1e1;
-border: none;
-border-radius: 4px;
-font-size: 14px; 
-display: flex;
-align-items: center;
-transition: all 0.1s;
-}
-form button[type="submit"]:active{
-background: #000;
-color: #e1e1e1;
-}
-form button[type="submit"] i{
-width: 15px;
-height: 15px;
-border-radius: 100%;
-border: 2px solid #e1e1e1;
-border-bottom: 2px solid transparent;
-margin-left: 8px;
-animation: spin 0.6s linear infinite;
-display: none; 
-}
-
 @keyframes spin{
 0%{transform: rotate(0deg)}
 100%{transform: rotate(360deg)}
 }
 .container{
 width: 90%;
-margin: 1rem auto;
+margin: 0 auto;
+padding-top: 20px;
 border-radius: 5px;
 display: flex;
 gap: 1rem;
@@ -161,7 +70,7 @@ max-width: 100%;
 
 display: flex;
 flex-wrap: wrap;
-margin:12px;
+margin:0px;
 padding: 12px;
 
 background: rgba(255,255,255,0.12);
